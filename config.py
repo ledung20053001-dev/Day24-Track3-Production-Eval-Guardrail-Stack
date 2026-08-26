@@ -6,8 +6,32 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- API Keys ---
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai").strip().lower()
+if LLM_PROVIDER not in {"openai", "gemini"}:
+    raise ValueError("LLM_PROVIDER must be 'openai' or 'gemini'")
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", os.getenv("GEMINIKEY", ""))
+LLM_API_KEY = GEMINI_API_KEY if LLM_PROVIDER == "gemini" else OPENAI_API_KEY
+LLM_BASE_URL = (
+    "https://generativelanguage.googleapis.com/v1beta/openai/"
+    if LLM_PROVIDER == "gemini"
+    else os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+)
+LLM_MODEL = os.getenv(
+    "LLM_MODEL",
+    "gemini-2.5-flash" if LLM_PROVIDER == "gemini" else "gpt-4o-mini",
+)
+
+# RAGAS and NeMo use the OpenAI-compatible environment variables internally.
+# Gemini exposes an OpenAI-compatible endpoint, so map the selected provider
+# without requiring provider-specific changes in those libraries.
+if LLM_API_KEY:
+    os.environ["OPENAI_API_KEY"] = LLM_API_KEY
+os.environ["OPENAI_BASE_URL"] = LLM_BASE_URL
+os.environ["LLM_MODEL"] = LLM_MODEL
 HF_TOKEN = os.getenv("HF_TOKEN", "")  # Optional: for HuggingFace models
+MOCK_MODE = os.getenv("MOCK_MODE", "false").lower() in {"1", "true", "yes"}
 
 # --- Qdrant (same as Day 18) ---
 QDRANT_HOST = "localhost"
@@ -38,7 +62,15 @@ ADVERSARIAL_SET_PATH = os.path.join(os.path.dirname(__file__), "adversarial_set_
 GUARDRAILS_CONFIG_DIR = os.path.join(os.path.dirname(__file__), "guardrails")
 
 # --- LLM Judge ---
-JUDGE_MODEL = "gpt-4o-mini"
+JUDGE_MODEL = LLM_MODEL
+
+
+def get_llm_client():
+    """Return an OpenAI-compatible client for the selected provider."""
+    if not LLM_API_KEY:
+        raise RuntimeError(f"Missing API key for LLM_PROVIDER={LLM_PROVIDER}")
+    from openai import OpenAI
+    return OpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL)
 
 # --- Guardrail latency budget ---
 LATENCY_BUDGET_P95_MS = 500  # target: full guard stack P95 < 500ms
