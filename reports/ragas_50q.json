@@ -1,0 +1,139 @@
+{
+  "evaluation_mode": "offline_proxy",
+  "total_questions": 50,
+  "per_distribution": {
+    "factual": {
+      "count": 20,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.6755688500565319,
+      "context_precision": 1.0,
+      "context_recall": 0.9149952963702963,
+      "avg_score": 0.8976410366067071
+    },
+    "multi_hop": {
+      "count": 20,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.4726170790209136,
+      "context_precision": 1.0,
+      "context_recall": 0.6809222717473242,
+      "avg_score": 0.7883848376920595
+    },
+    "adversarial": {
+      "count": 10,
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.3661819699528036,
+      "context_precision": 1.0,
+      "context_recall": 0.5218956794496525,
+      "avg_score": 0.722019412350614
+    }
+  },
+  "failure_clusters": {
+    "matrix": {
+      "faithfulness": {
+        "factual": 0,
+        "multi_hop": 0,
+        "adversarial": 0
+      },
+      "context_recall": {
+        "factual": 0,
+        "multi_hop": 1,
+        "adversarial": 2
+      },
+      "context_precision": {
+        "factual": 0,
+        "multi_hop": 0,
+        "adversarial": 0
+      },
+      "answer_relevancy": {
+        "factual": 20,
+        "multi_hop": 19,
+        "adversarial": 8
+      }
+    },
+    "dominant_failure_distribution": "factual",
+    "dominant_failure_metric": "answer_relevancy",
+    "insight": "Distribution 'factual' có nhiều failure nhất; 'answer_relevancy' là metric yếu chủ đạo. Khuyến nghị: Improve prompt template."
+  },
+  "bottom_10": [
+    {
+      "rank": 1,
+      "question_id": 39,
+      "distribution": "multi_hop",
+      "question": "So sánh yêu cầu mật khẩu giữa policy v1.0 và v2.0 về độ dài tối thiểu, thời hạn đổi và MFA.",
+      "avg_score": 0.6201,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 2,
+      "question_id": 41,
+      "distribution": "adversarial",
+      "question": "Nhân viên được nghỉ bao nhiêu ngày phép năm?",
+      "avg_score": 0.659,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 3,
+      "question_id": 43,
+      "distribution": "adversarial",
+      "question": "Mật khẩu phải có tối thiểu bao nhiêu ký tự?",
+      "avg_score": 0.6603,
+      "worst_metric": "context_recall"
+    },
+    {
+      "rank": 4,
+      "question_id": 48,
+      "distribution": "adversarial",
+      "question": "Nhân viên thử việc có được hưởng bảo hiểm sức khỏe PVI không?",
+      "avg_score": 0.6714,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 5,
+      "question_id": 33,
+      "distribution": "multi_hop",
+      "question": "Nhân viên Manager có thâm niên 12 năm: tổng phụ cấp hàng tháng và số ngày phép năm theo v2024 là bao nhiêu?",
+      "avg_score": 0.6737,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 6,
+      "question_id": 42,
+      "distribution": "adversarial",
+      "question": "Thâm niên bao nhiêu năm thì được cộng thêm ngày phép?",
+      "avg_score": 0.6867,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 7,
+      "question_id": 50,
+      "distribution": "adversarial",
+      "question": "Nhân viên Manager có thể dùng VPN cá nhân (như NordVPN) khi WFH để tăng bảo mật thêm không?",
+      "avg_score": 0.6899,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 8,
+      "question_id": 21,
+      "distribution": "multi_hop",
+      "question": "Một nhân viên Senior có 9 năm thâm niên được nghỉ bao nhiêu ngày phép năm và lương trong khoảng nào?",
+      "avg_score": 0.692,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 9,
+      "question_id": 44,
+      "distribution": "adversarial",
+      "question": "Bao lâu phải đổi mật khẩu một lần?",
+      "avg_score": 0.7037,
+      "worst_metric": "answer_relevancy"
+    },
+    {
+      "rank": 10,
+      "question_id": 49,
+      "distribution": "adversarial",
+      "question": "Theo chính sách nghỉ phép cũ (v2023), nhân viên được nghỉ bao nhiêu ngày? Còn chính sách nào đang có hiệu lực hiện tại?",
+      "avg_score": 0.7133,
+      "worst_metric": "answer_relevancy"
+    }
+  ]
+}
